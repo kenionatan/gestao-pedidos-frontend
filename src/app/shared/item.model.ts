@@ -1,4 +1,5 @@
 export class Item {
   ItemID:number;
-  Title:string;
+  product_title:string;
+  product_price:number;
 }
