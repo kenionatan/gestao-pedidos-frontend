@@ -34,7 +34,9 @@
       <th>Price</th>
       <th>Qty</th>
       <th>Total</th>
-      <th></th>
+      <th>
+        <a class="btn btn-success text-white" (click)="AddOrEditOrderItem(null, service.formData.OrderID)">Add</a>
+      </th>
     </thead>
     <tbody>
       <tr *ngIf="service.orderItems.length==0">
@@ -42,12 +44,14 @@
           No items
         </td>
       </tr>
-      <tr *ngFor="let item of service.orderItems">
+      <tr *ngFor="let item of service.orderItems; let i=index;">
         <td>{{ item.ItemName }}</td>
         <td>{{ item.Price }}</td>
         <td>{{ item.Quantity }}</td>
         <td>{{ item.Total }}</td>
-        <td></td>
+        <td>
+          <a class="btn btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)">Edit</a>
+        </td>
       </tr>
     </tbody>
   </table>
