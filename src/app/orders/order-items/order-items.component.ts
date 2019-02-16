@@ -16,6 +16,7 @@ export class OrderItemsComponent implements OnInit {
   itemList: Item[];
   isValid: boolean = true;
 
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<OrderItemsComponent>,
@@ -45,6 +46,10 @@ export class OrderItemsComponent implements OnInit {
       this.formData.ItemName = this.itemList[ctrl.selectedIndex - 1].product_title;
       this.formData.Quantity = 1;
     }
+    this.updateTotal();
+  }
+
+  updateTotalPrice(){
     this.updateTotal();
   }
 
