@@ -9,6 +9,7 @@
         <label>Client</label>
         <select name="ClientID" #ClientID="ngModel" [(ngModel)]="service.formData.ClientID" class="form-control">
           <option value="0">-</option>
+          <option *ngFor="let item of clientList" value="{{ item.id }}">{{ item.client_name }}</option>
         </select>
       </div>
     </div>
@@ -40,7 +41,7 @@
     </thead>
     <tbody>
       <tr *ngIf="service.orderItems.length==0">
-        <td colspan="4" class="font-italic text-center">
+        <td colspan="5" class="font-italic text-center">
           Não há itens.
         </td>
       </tr>
@@ -50,7 +51,8 @@
         <td>{{ item.Quantity }}</td>
         <td>{{ item.Total }}</td>
         <td>
-          <a class="btn btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)">Editar</a>
+          <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)"><i class="fa fa-pencil-alt"></i></a>
+          <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDeleteOrderItem(item.OrderItemID,i)"><i class="fa fa-trash"></i></a>
         </td>
       </tr>
     </tbody>

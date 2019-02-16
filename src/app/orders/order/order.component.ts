@@ -3,6 +3,8 @@ import { OrderService } from 'src/app/shared/order.service';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrderItemsComponent } from '../order-items/order-items.component';
+import { Client } from 'src/app/shared/client.model';
+import { ClientService } from 'src/app/shared/client.service';
 
 @Component({
   selector: 'app-order',
@@ -11,11 +13,15 @@ import { OrderItemsComponent } from '../order-items/order-items.component';
 })
 export class OrderComponent implements OnInit {
 
+  clientList: Client[];
+
   constructor(private service: OrderService,
-    private dialog:MatDialog) { }
+    private dialog:MatDialog,
+    private clientService: ClientService) { }
 
   ngOnInit() {
     this.resetForm();
+    this.clientService.getClientList().then(res => this.clientList = res as Client[]);
   }
 
   resetForm(form?:NgForm){
@@ -26,7 +32,8 @@ export class OrderComponent implements OnInit {
       OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
       ClientID: 0,
       PMethod: '',
-      GTotal: 0
+      GTotal: 0,
+      DeletedOrderItemIDs: ''
     };
     this.service.orderItems = [];
   }
@@ -37,7 +44,23 @@ export class OrderComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.width = "50%";
     dialogConfig.data = {orderItemIndex, OrderID}
-    this.dialog.open(OrderItemsComponent, dialogConfig);
+    this.dialog.open(OrderItemsComponent, dialogConfig).afterClosed().subscribe(res=>{
+      this.updateGrandTotal();
+    });
+  }
+
+  onDeleteOrderItem(orderItemID: number, i: number) {
+    if (orderItemID != null)
+      this.service.formData.DeletedOrderItemIDs += orderItemID + ",";
+    this.service.orderItems.splice(i, 1);
+    this.updateGrandTotal();
+  }
+
+  updateGrandTotal() {
+    this.service.formData.GTotal = this.service.orderItems.reduce((prev, curr) => {
+      return prev + curr.Total;
+    }, 0);
+    this.service.formData.GTotal = parseFloat(this.service.formData.GTotal.toFixed(2));
   }
 
 }

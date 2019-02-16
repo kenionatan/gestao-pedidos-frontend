@@ -25,15 +25,18 @@ export class OrderItemsComponent implements OnInit {
 
   ngOnInit() {
     this.itemService.getItemList().then(res => this.itemList = res as Item[]);
-    this.formData = {
-      OrderItemID: null,
-      OrderID: this.data.OrderID,
-      ItemID: 0,
-      ItemName: '',
-      Price: 0,
-      Quantity: 0,
-      Total: 0
-    }
+    if(this.data.orderItemIndex == null)
+      this.formData = {
+        OrderItemID: null,
+        OrderID: this.data.OrderID,
+        ItemID: 0,
+        ItemName: '',
+        Price: 0,
+        Quantity: 0,
+        Total: 0
+      }
+    else
+      this.formData = Object.assign({}, this.orderSevice.orderItems[this.data.orderItemIndex]);
   }
 
   updatePrice(ctrl) {
