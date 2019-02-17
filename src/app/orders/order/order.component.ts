@@ -14,6 +14,7 @@ import { ClientService } from 'src/app/shared/client.service';
 export class OrderComponent implements OnInit {
 
   clientList: Client[];
+  isValid: boolean = true;
 
   constructor(private service: OrderService,
     private dialog:MatDialog,
@@ -30,10 +31,11 @@ export class OrderComponent implements OnInit {
     this.service.formData = {
       OrderID: null,
       OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
-      ClientID: 0,
+      client: 0,
       PMethod: '',
-      GTotal: 0,
-      DeletedOrderItemIDs: ''
+      grand_total: 0,
+      DeletedOrderItemIDs: '',
+      profitability: 'profitable'
     };
     this.service.orderItems = [];
   }
@@ -57,10 +59,30 @@ export class OrderComponent implements OnInit {
   }
 
   updateGrandTotal() {
-    this.service.formData.GTotal = this.service.orderItems.reduce((prev, curr) => {
+    this.service.formData.grand_total = this.service.orderItems.reduce((prev, curr) => {
       return prev + curr.Total;
     }, 0);
-    this.service.formData.GTotal = parseFloat(this.service.formData.GTotal.toFixed(2));
+    this.service.formData.grand_total = parseFloat(this.service.formData.grand_total.toFixed(2));
   }
+
+  validateForm() {
+    this.isValid = true;
+    if (this.service.formData.client == 0)
+      this.isValid = false;
+    else if (this.service.orderItems.length == 0)
+      this.isValid = false;
+    return this.isValid;
+  }
+
+  onSubmit(form:NgForm){
+    //console.log(this.service.formData.client);
+    if(this.validateForm()){
+      this.service.saveOrUpdateOrder().subscribe(res => {
+        this.resetForm();
+      })
+    }
+  }
+
+  
 
 }

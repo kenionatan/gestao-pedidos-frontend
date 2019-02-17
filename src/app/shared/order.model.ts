@@ -1,8 +1,9 @@
 export class Order {
   OrderID:number;
   OrderNo:string;
-  ClientID:number;
+  client:number;
   PMethod:string;
-  GTotal:number;
+  grand_total:number;
   DeletedOrderItemIDs:string;
+  profitability:string;
 }

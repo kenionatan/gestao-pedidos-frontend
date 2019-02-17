@@ -1,4 +1,4 @@
-<form #form="ngForm" autocomplete="off" *ngIf="service.formData">
+<form #form="ngForm" autocomplete="off" *ngIf="service.formData" (submit)="onSubmit(form)">
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -7,7 +7,8 @@
       </div>
       <div class="form-group">
         <label>Client</label>
-        <select name="ClientID" #ClientID="ngModel" [(ngModel)]="service.formData.ClientID" class="form-control">
+        <select name="client" #ClientID="ngModel" [(ngModel)]="service.formData.client" class="form-control"
+        [class.is-invalid]="!isValid && service.formData.client==0">
           <option value="0">-</option>
           <option *ngFor="let item of clientList" value="{{ item.id }}">{{ item.client_name }}</option>
         </select>
@@ -24,7 +25,7 @@
       </div>
       <div class="form-group">
         <label>Total</label>
-        <input name="GTotal" #GTotal="ngModel" [(ngModel)]="service.formData.GTotal" class="form-control" readonly>
+        <input name="grand_total" #grand_total="ngModel" [(ngModel)]="service.formData.grand_total" class="form-control" readonly>
       </div>
     </div>
   </div>
@@ -40,7 +41,7 @@
       </th>
     </thead>
     <tbody>
-      <tr *ngIf="service.orderItems.length==0">
+      <tr *ngIf="service.orderItems.length==0" [class.text.danger]="!isValid && service.orderItems.lenght==0">
         <td colspan="5" class="font-italic text-center">
           Não há itens.
         </td>
