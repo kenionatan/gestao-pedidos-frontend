@@ -77,11 +77,12 @@ export class OrderComponent implements OnInit {
   onSubmit(form:NgForm){
     //console.log(this.service.formData.client);
     if(this.validateForm()){
-      this.service.saveOrUpdateOrder().subscribe(res => {
+      this.service.saveOrUpdateOrder().then(res => {
         this.resetForm();
       })
     }
   }
+  //this.clientService.getClientList().then(res => this.clientList = res as Client[]);
 
   
 
