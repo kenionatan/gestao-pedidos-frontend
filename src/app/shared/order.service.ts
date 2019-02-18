@@ -20,8 +20,13 @@ export class OrderService {
       ...this.formData,
       OrderItems : this.orderItems
     };
+    
+    console.log(JSON.stringify(this.orderItems));
+    console.log(this.formData.id);
     //var body = {client: 1, quantityItem: 2, price: this.formData.GTotal, profitability: 'profitable'}
     return this.http.post(environment.apiURL+'/order/', body, {headers: this.httpHeaders});
+    console.log(this.formData.id);
+
   }
 
 }

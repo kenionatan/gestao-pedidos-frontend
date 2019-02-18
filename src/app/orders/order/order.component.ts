@@ -29,7 +29,7 @@ export class OrderComponent implements OnInit {
     if(form = null)
       form.resetForm();
     this.service.formData = {
-      OrderID: null,
+      id: null,
       OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
       client: 0,
       PMethod: '',
@@ -40,12 +40,12 @@ export class OrderComponent implements OnInit {
     this.service.orderItems = [];
   }
 
-  AddOrEditOrderItem(orderItemIndex, OrderID){
+  AddOrEditOrderItem(orderItemIndex, id){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = "50%";
-    dialogConfig.data = {orderItemIndex, OrderID}
+    dialogConfig.data = {orderItemIndex, id}
     this.dialog.open(OrderItemsComponent, dialogConfig).afterClosed().subscribe(res=>{
       this.updateGrandTotal();
     });

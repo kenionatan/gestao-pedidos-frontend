@@ -1,5 +1,5 @@
 export class Order {
-  OrderID:number;
+  id:number;
   OrderNo:string;
   client:number;
   PMethod:string;
