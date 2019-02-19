@@ -26,7 +26,12 @@
       </div>
       <div class="form-group">
         <label>Total</label>
-        <input name="grand_total" #grand_total="ngModel" [(ngModel)]="service.formData.grand_total" class="form-control" readonly>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">R$</div>
+          </div>
+          <input name="grand_total" #grand_total="ngModel" [(ngModel)]="service.formData.grand_total" class="form-control" readonly>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +56,7 @@
         <td>{{ item.ItemName }}</td>
         <td>{{ item.Price }}</td>
         <td>{{ item.Quantity }}</td>
-        <td>{{ item.Total }}</td>
+        <td>R${{ item.Total }}</td>
         <td>
           <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)"><i class="fa fa-pencil-alt"></i></a>
           <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDeleteOrderItem(item.OrderItemID,i)"><i class="fa fa-trash"></i></a>
