@@ -5,6 +5,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { Client } from 'src/app/shared/client.model';
 import { ClientService } from 'src/app/shared/client.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -18,10 +20,21 @@ export class OrderComponent implements OnInit {
 
   constructor(private service: OrderService,
     private dialog:MatDialog,
-    private clientService: ClientService) { }
+    private clientService: ClientService,
+    private toastr: ToastrService,
+    private router: Router,
+    private currentRoute:ActivatedRoute) { }
 
   ngOnInit() {
-    this.resetForm();
+    let orderID = this.currentRoute.snapshot.paramMap.get('id');
+    if(orderID == null)
+      this.resetForm();
+    else{
+      this.service.getOrderByID(parseInt(orderID)).then(res=>{
+        this.service.formData = res.id;
+        this.service.orderItems = res.items;
+      });
+    }
     this.clientService.getClientList().then(res => this.clientList = res as Client[]);
   }
 
@@ -75,14 +88,14 @@ export class OrderComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
-    //console.log(this.service.formData.client);
     if(this.validateForm()){
       this.service.saveOrUpdateOrder().then(res => {
         this.resetForm();
+        this.toastr.success('Pedido feito com sucesso!', 'Pedido', { progressBar: true });
+        this.router.navigate(['/orders']);
       })
     }
   }
-  //this.clientService.getClientList().then(res => this.clientList = res as Client[]);
 
   
 

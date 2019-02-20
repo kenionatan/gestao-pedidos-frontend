@@ -34,4 +34,14 @@ export class OrderService {
     return this.http.post(environment.apiURL+'/order/', body, {headers: this.httpHeaders}).toPromise();
   }
 
+  getOrderList(){
+    return this.http.get(environment.apiURL+'/order/', 
+    {headers: this.httpHeaders}).toPromise();
+  }
+
+  getOrderByID(id:number):any{
+    return this.http.get(environment.apiURL+'/order/'+id+'/', 
+    {headers: this.httpHeaders}).toPromise();
+  }
+
 }

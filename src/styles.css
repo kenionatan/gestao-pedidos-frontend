@@ -13,3 +13,7 @@
 table.table-hover tbody tr:hover{
 cursor: pointer;
 }
+
+#toast-container > div {
+    opacity:1;
+}

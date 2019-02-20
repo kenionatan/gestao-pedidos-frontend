@@ -43,7 +43,7 @@
       <th>Quantidade</th>
       <th>Total</th>
       <th>
-        <a class="btn btn-success text-white" (click)="AddOrEditOrderItem(null, service.formData.OrderID)">Adcionar</a>
+        <a class="btn btn-success text-white" (click)="AddOrEditOrderItem(null, service.formData.OrderID)"><i class="fa fa-plus"></i> Adcionar</a>
       </th>
     </thead>
     <tbody>
@@ -53,10 +53,10 @@
         </td>
       </tr>
       <tr *ngFor="let item of service.orderItems; let i=index;">
-        <td>{{ item.ItemName }}</td>
-        <td>{{ item.Price }}</td>
-        <td>{{ item.Quantity }}</td>
-        <td>R${{ item.Total }}</td>
+        <td>{{ item.product.product_title }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantityProduct }}</td>
+        <td>R${{ item.price*item.quantityProduct }}</td>
         <td>
           <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)"><i class="fa fa-pencil-alt"></i></a>
           <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDeleteOrderItem(item.OrderItemID,i)"><i class="fa fa-trash"></i></a>
@@ -67,5 +67,6 @@
 
   <div class="form-group">
     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Salvar</button>
+    <a class="btn btn-outline-dark ml-1" routerLink="/orders"><i class="fa fa-table"></i> Lista de Pedidos</a>
   </div>
 </form>
