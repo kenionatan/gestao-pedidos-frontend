@@ -25,7 +25,7 @@ export class OrderItemsComponent implements OnInit {
 
   ngOnInit() {
     this.itemService.getItemList().then(res => this.itemList = res as Item[]);
-    if(this.data.orderItemIndex == null)
+    if (this.data.orderItemIndex == null) {
       this.formData = {
         OrderItemID: null,
         OrderID: this.data.OrderID,
@@ -35,8 +35,18 @@ export class OrderItemsComponent implements OnInit {
         Quantity: 0,
         Total: 0
       }
-    else
-      this.formData = Object.assign({}, this.orderSevice.orderItems[this.data.orderItemIndex]);
+    } else {
+      const product = this.orderSevice.orderItems[this.data.orderItemIndex].product;
+      this.formData = {
+        OrderItemID: product.id,
+        OrderID: this.data.OrderID,
+        ItemID: product.id,
+        ItemName: '',
+        Price: product.product_price,
+        Quantity: product.product_multiple,
+        Total: product.product_price * product.product_multiple
+      };
+    }
   }
 
   updatePrice(ctrl) {
@@ -62,10 +72,18 @@ export class OrderItemsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.validateForm(form.value)) {
+      const item = {
+        product: {
+          id: parseInt(form.value.ItemID),
+          product_title: form.value.ItemName,
+          product_price: parseFloat(form.value.Price),
+          product_multiple: form.value.Quantity
+        }
+      };
       if (this.data.orderItemIndex == null)
-        this.orderSevice.orderItems.push(form.value);
+        this.orderSevice.orderItems.push(item);
       else
-        this.orderSevice.orderItems[this.data.orderItemIndex] = form.value;
+        this.orderSevice.orderItems[this.data.orderItemIndex] = item;
       this.dialogRef.close();
     }
   }

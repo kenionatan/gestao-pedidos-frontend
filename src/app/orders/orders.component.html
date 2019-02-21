@@ -8,13 +8,13 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of orderList">
-      <th (click)="openForEdit(item.id)">{{ item.id }}</th>
-      <td (click)="openForEdit(item.id)">{{ item.client.client_name }}</td>
-      <td (click)="openForEdit(item.id)">{{ item.grand_total }}</td>
-      <td (click)="openForEdit(item.id)">{{ item.create_date | date:"dd/MM/yyyy 'às' HH:mm:ss" }}</td>
+      <th>{{ item.id }}</th>
+      <td>{{ getClientBy(item.client).client_name }}</td>
+      <td>{{ item.grand_total }}</td>
+      <td>{{ item.create_date | date:"dd/MM/yyyy 'às' HH:mm:ss" }}</td>
       <td>
-        <a class="btn btn-sm btn-info text-white"><i class="fa fa-pencil-alt"></i></a>
-        <a class="btn btn-sm btn-danger text-white ml-1"><i class="fa fa-trash"></i></a>
+        <a class="btn btn-sm btn-info text-white" (click)="openForEdit(item.id)"><i class="fa fa-pencil-alt"></i></a>
+        <a class="btn btn-sm btn-danger text-white ml-1" (click)="delete(item.id)"><i class="fa fa-trash"></i></a>
       </td>
     </tr>
   </tbody>

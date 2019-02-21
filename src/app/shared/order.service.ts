@@ -19,19 +19,24 @@ export class OrderService {
 
   saveOrUpdateOrder(){
     var body = {
+      id: this.formData.id,
       client: parseInt(this.formData.client),
       quantityItem: this.orderItems.length,
       profitability: 'profitable',
       grand_total: parseFloat(this.formData.grand_total),
       items: this.orderItems.map((entry) => {
         return {
-          product: parseInt(entry.ItemID),
-          price: parseFloat(entry.Price),
-          quantityProduct: parseInt(entry.Quantity)
+          product: parseInt(entry.product.id),
+          price: parseFloat(entry.product.product_price),
+          quantityProduct: parseInt(entry.product.product_multiple)
         };
       })
     };
-    return this.http.post(environment.apiURL+'/order/', body, {headers: this.httpHeaders}).toPromise();
+    if (this.formData.id) {
+      return this.http.put(environment.apiURL+'/order/'+this.formData.id+'/', body, {headers: this.httpHeaders}).toPromise();
+    } else {
+      return this.http.post(environment.apiURL+'/order/', body, {headers: this.httpHeaders}).toPromise();
+    }
   }
 
   getOrderList(){
@@ -41,6 +46,11 @@ export class OrderService {
 
   getOrderByID(id:number):any{
     return this.http.get(environment.apiURL+'/order/'+id+'/', 
+    {headers: this.httpHeaders}).toPromise();
+  }
+
+  deleteOrderBy(id: number) {
+    return this.http.delete(environment.apiURL+'/order/'+id+'/', 
     {headers: this.httpHeaders}).toPromise();
   }
 

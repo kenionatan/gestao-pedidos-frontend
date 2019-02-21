@@ -53,10 +53,10 @@
         </td>
       </tr>
       <tr *ngFor="let item of service.orderItems; let i=index;">
-        <td>{{ item.product.product_title }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.quantityProduct }}</td>
-        <td>R${{ item.price*item.quantityProduct }}</td>
+        <td>{{ getItemBy(item.product.id).product_title }}</td>
+        <td>{{ item.product.product_price?.toFixed(2) }}</td>
+        <td>{{ item.product.product_multiple }}</td>
+        <td>R${{ (item.product.product_price*item.product.product_multiple)?.toFixed(2) }}</td>
         <td>
           <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)"><i class="fa fa-pencil-alt"></i></a>
           <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDeleteOrderItem(item.OrderItemID,i)"><i class="fa fa-trash"></i></a>

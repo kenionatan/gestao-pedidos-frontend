@@ -5,6 +5,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { OrderItemsComponent } from '../order-items/order-items.component';
 import { Client } from 'src/app/shared/client.model';
 import { ClientService } from 'src/app/shared/client.service';
+import { ItemService } from 'src/app/shared/item.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -17,25 +18,45 @@ export class OrderComponent implements OnInit {
 
   clientList: Client[];
   isValid: boolean = true;
+  itemList = [];
 
-  constructor(private service: OrderService,
+  constructor(public service: OrderService,
     private dialog:MatDialog,
     private clientService: ClientService,
+    private itemService: ItemService,
     private toastr: ToastrService,
     private router: Router,
     private currentRoute:ActivatedRoute) { }
 
   ngOnInit() {
     let orderID = this.currentRoute.snapshot.paramMap.get('id');
+    this.itemService.getItemList().then(res => this.itemList = res as any[]);
     if(orderID == null)
       this.resetForm();
     else{
       this.service.getOrderByID(parseInt(orderID)).then(res=>{
-        this.service.formData = res.id;
-        this.service.orderItems = res.items;
+        this.service.formData = {
+          id: res.id,
+          client: res.client,
+          grand_total: res.grand_total
+        };
+        this.service.orderItems = res.items.map((entry) => {
+          return {
+            product: {
+              id: entry.product,
+              product_price: parseFloat(entry.price),
+              product_multiple: entry.quantityProduct
+            }
+          };
+        });
       });
     }
     this.clientService.getClientList().then(res => this.clientList = res as Client[]);
+  }
+
+  public getItemBy(id: number) {
+    const item = this.itemList.find((entry) => entry.id === id);
+    return item || {};
   }
 
   resetForm(form?:NgForm){
@@ -58,7 +79,7 @@ export class OrderComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = "50%";
-    dialogConfig.data = {orderItemIndex, id}
+    dialogConfig.data = {orderItemIndex, id};
     this.dialog.open(OrderItemsComponent, dialogConfig).afterClosed().subscribe(res=>{
       this.updateGrandTotal();
     });
@@ -72,9 +93,12 @@ export class OrderComponent implements OnInit {
   }
 
   updateGrandTotal() {
-    this.service.formData.grand_total = this.service.orderItems.reduce((prev, curr) => {
-      return prev + curr.Total;
-    }, 0);
+    this.service.formData.grand_total = 0;
+    this.service.orderItems.map((entry) => {
+      if (entry.product) {
+        this.service.formData.grand_total += parseFloat(entry.product.product_price) * entry.product.product_multiple;
+      }
+    });
     this.service.formData.grand_total = parseFloat(this.service.formData.grand_total.toFixed(2));
   }
 
