@@ -27,7 +27,8 @@ export class OrderService {
         return {
           product: parseInt(entry.product.id),
           price: parseFloat(entry.product.product_price),
-          quantityProduct: parseInt(entry.product.quantity)
+          quantityProduct: parseInt(entry.product.quantity),
+          profitability: entry.product.profitability
         };
       })
     };

@@ -45,7 +45,8 @@ export class OrderComponent implements OnInit {
             product: {
               id: entry.product,
               product_price: parseFloat(entry.price),
-              quantity: entry.quantityProduct
+              quantity: entry.quantityProduct,
+              profitability: entry.profitability
             }
           };
         });
@@ -64,9 +65,8 @@ export class OrderComponent implements OnInit {
       form.resetForm();
     this.service.formData = {
       id: null,
-      OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
+      //OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
       client: 0,
-      PMethod: '',
       grand_total: 0,
       DeletedOrderItemIDs: ''
     };
@@ -114,7 +114,7 @@ export class OrderComponent implements OnInit {
     if(this.validateForm()){
       this.service.saveOrUpdateOrder().then(res => {
         this.resetForm();
-        this.toastr.success('Pedido feito com sucesso!', 'Pedido', { progressBar: true });
+        this.toastr.success('Pedido Salvo!', 'Pedido', { progressBar: true });
         this.router.navigate(['/orders']);
       })
     }

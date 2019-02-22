@@ -66,15 +66,18 @@ export class OrderItemsComponent implements OnInit {
 
   updateTotal() {
     var iditem = this.formData.ItemID-1;
-    var priceitem = this.itemList[iditem].product_price;
-    //console.log(iditem);
-    //console.log(JSON.stringify(this.itemList[iditem].product_price));
+    var priceitem:number = this.itemList[iditem].product_price;
     this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
-    if(this.formData.Price >= priceitem){
-      //console.log(this.formData.Price);
+    
+    // Profitability rule
+    if(this.formData.Price > priceitem){
       this.formData.Profitability = "Rentabilidade Alta";
-    }else{
-      this.formData.Profitability = "Rentabilidade Baixa";
+    }
+    if((this.formData.Price >= (priceitem*0.9)) || (this.formData.Price <= priceitem)){
+      this.formData.Profitability = "Rentabilidade Boa";
+    }
+    if(this.formData.Price < (priceitem*0.9)){
+      this.formData.Profitability = "Rentabilidade Ruim";
     }
   }
 
