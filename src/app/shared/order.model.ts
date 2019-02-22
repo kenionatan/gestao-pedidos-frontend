@@ -5,5 +5,4 @@ export class Order {
   PMethod:string;
   grand_total:number;
   DeletedOrderItemIDs:string;
-  profitability:string;
 }

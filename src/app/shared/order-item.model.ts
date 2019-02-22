@@ -6,4 +6,5 @@ export class OrderItem {
   ItemName:string;
   Price:number;
   Total:number;
+  Profitability: string;
 }

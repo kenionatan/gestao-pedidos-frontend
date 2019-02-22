@@ -33,7 +33,8 @@ export class OrderItemsComponent implements OnInit {
         ItemName: '',
         Price: 0,
         Quantity: 0,
-        Total: 0
+        Total: 0,
+        Profitability: ''
       }
     } else {
       const product = this.orderSevice.orderItems[this.data.orderItemIndex].product;
@@ -43,8 +44,9 @@ export class OrderItemsComponent implements OnInit {
         ItemID: product.id,
         ItemName: '',
         Price: product.product_price,
-        Quantity: product.product_multiple,
-        Total: product.product_price * product.product_multiple
+        Quantity: product.quantity,
+        Total: product.product_price * product.quantity,
+        Profitability: product.profitability
       };
     }
   }
@@ -62,12 +64,18 @@ export class OrderItemsComponent implements OnInit {
     this.updateTotal();
   }
 
-  updateTotalPrice(){
-    this.updateTotal();
-  }
-
   updateTotal() {
+    var iditem = this.formData.ItemID-1;
+    var priceitem = this.itemList[iditem].product_price;
+    //console.log(iditem);
+    //console.log(JSON.stringify(this.itemList[iditem].product_price));
     this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
+    if(this.formData.Price >= priceitem){
+      //console.log(this.formData.Price);
+      this.formData.Profitability = "Rentabilidade Alta";
+    }else{
+      this.formData.Profitability = "Rentabilidade Baixa";
+    }
   }
 
   onSubmit(form: NgForm) {
@@ -77,7 +85,8 @@ export class OrderItemsComponent implements OnInit {
           id: parseInt(form.value.ItemID),
           product_title: form.value.ItemName,
           product_price: parseFloat(form.value.Price),
-          product_multiple: form.value.Quantity
+          quantity: form.value.Quantity,
+          profitability: form.value.Profitability
         }
       };
       if (this.data.orderItemIndex == null)

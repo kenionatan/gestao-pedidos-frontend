@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit {
             product: {
               id: entry.product,
               product_price: parseFloat(entry.price),
-              product_multiple: entry.quantityProduct
+              quantity: entry.quantityProduct
             }
           };
         });
@@ -68,8 +68,7 @@ export class OrderComponent implements OnInit {
       client: 0,
       PMethod: '',
       grand_total: 0,
-      DeletedOrderItemIDs: '',
-      profitability: 'profitable'
+      DeletedOrderItemIDs: ''
     };
     this.service.orderItems = [];
   }
@@ -96,7 +95,7 @@ export class OrderComponent implements OnInit {
     this.service.formData.grand_total = 0;
     this.service.orderItems.map((entry) => {
       if (entry.product) {
-        this.service.formData.grand_total += parseFloat(entry.product.product_price) * entry.product.product_multiple;
+        this.service.formData.grand_total += parseFloat(entry.product.product_price) * entry.product.quantity;
       }
     });
     this.service.formData.grand_total = parseFloat(this.service.formData.grand_total.toFixed(2));

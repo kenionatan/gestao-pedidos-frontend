@@ -22,13 +22,12 @@ export class OrderService {
       id: this.formData.id,
       client: parseInt(this.formData.client),
       quantityItem: this.orderItems.length,
-      profitability: 'profitable',
       grand_total: parseFloat(this.formData.grand_total),
       items: this.orderItems.map((entry) => {
         return {
           product: parseInt(entry.product.id),
           price: parseFloat(entry.product.product_price),
-          quantityProduct: parseInt(entry.product.product_multiple)
+          quantityProduct: parseInt(entry.product.quantity)
         };
       })
     };
