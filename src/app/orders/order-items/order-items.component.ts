@@ -64,21 +64,25 @@ export class OrderItemsComponent implements OnInit {
     this.updateTotal();
   }
 
+  // Profitability Rule
+  calcProfitability(price, sellprice){
+    if(sellprice > price){
+      this.formData.Profitability = "Rentabilidade Alta";
+    }
+    if((sellprice <= price) && (sellprice >= price * 0.9)){
+      this.formData.Profitability = "Rentabilidade Boa";
+    }
+    if(sellprice < price * 0.9){
+      this.formData.Profitability = "Rentabilidade Ruim";
+    }
+    return "Sem Rentabilidade";
+  }
+
   updateTotal() {
     var iditem = this.formData.ItemID-1;
     var priceitem:number = this.itemList[iditem].product_price;
     this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
-    
-    // Profitability rule
-    if(this.formData.Price > priceitem){
-      this.formData.Profitability = "Rentabilidade Alta";
-    }
-    if((this.formData.Price >= (priceitem*0.9)) || (this.formData.Price <= priceitem)){
-      this.formData.Profitability = "Rentabilidade Boa";
-    }
-    if(this.formData.Price < (priceitem*0.9)){
-      this.formData.Profitability = "Rentabilidade Ruim";
-    }
+    this.calcProfitability(priceitem, this.formData.Price);
   }
 
   onSubmit(form: NgForm) {
