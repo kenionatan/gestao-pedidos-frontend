@@ -3,6 +3,8 @@ import { OrderService } from '../shared/order.service';
 import { Router } from '@angular/router';
 import { Client } from 'src/app/shared/client.model';
 import { ClientService } from 'src/app/shared/client.service';
+import { DialogService } from '../shared/dialog.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-orders',
@@ -16,7 +18,9 @@ export class OrdersComponent implements OnInit {
 
   constructor(private service: OrderService,
     private clientService: ClientService,
-    private router:Router) { }
+    private router:Router,
+    private dialogService: DialogService,
+    private toastr: ToastrService,) { }
 
   ngOnInit() {
     this.init();
@@ -33,7 +37,14 @@ export class OrdersComponent implements OnInit {
   }
 
   delete(id: number) {
-    this.service.deleteOrderBy(id).then(res=> this.init());
+    this.dialogService.openConfirmDialog('Tem certeza que deseja deletar o pedido selecionado? '+id)
+    .afterClosed().subscribe(res => {
+      if(res){
+        this.service.deleteOrderBy(id).then(res=> this.init());
+        this.toastr.warning('Pedido deletado!', 'Aviso');
+      }
+    });
+    //this.service.deleteOrderBy(id).then(res=> this.init());
   }
 
   openForEdit(orderID:number){

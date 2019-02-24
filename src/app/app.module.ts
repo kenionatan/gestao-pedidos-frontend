@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
     OrdersComponent,
     OrderComponent,
     OrderItemsComponent,
-    MainNavComponent
+    MainNavComponent,
+    MatConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
     MatIconModule,
     MatListModule
   ],
-  entryComponents: [OrderItemsComponent],
+  entryComponents: [OrderItemsComponent, MatConfirmDialogComponent],
   providers: [OrderService],
   bootstrap: [AppComponent]
 })
