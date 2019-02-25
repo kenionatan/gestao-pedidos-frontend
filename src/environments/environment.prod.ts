@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiURL: 'https://gestao-pedidos-backend.herokuapp.com'
 };
