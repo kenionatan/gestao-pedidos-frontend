@@ -2,7 +2,7 @@
 <hr>
 <form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
     <input type="hidden"  name="OrderItemID" #OrderItemID="ngModel" [(ngModel)]="formData.OrderItemID">
-    <input type="hidden"  name="id" #id="ngModel" [(ngModel)]="formData.id">
+    <input type="hidden"  name="id" #id="ngModel" [(ngModel)]="formData.ItemID">
     <input type="hidden"  name="ItemName" #ItemName="ngModel" [(ngModel)]="formData.ItemName">
   <div class="form-group">
     <label>Item</label>
