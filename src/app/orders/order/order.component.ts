@@ -65,7 +65,6 @@ export class OrderComponent implements OnInit {
       form.resetForm();
     this.service.formData = {
       id: null,
-      //OrderNo: Math.floor(100000 + Math.random() * 900000).toString(),
       client: 0,
       grand_total: 0,
       DeletedOrderItemIDs: ''

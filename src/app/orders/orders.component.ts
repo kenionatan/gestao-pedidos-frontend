@@ -20,7 +20,7 @@ export class OrdersComponent implements OnInit {
     private clientService: ClientService,
     private router:Router,
     private dialogService: DialogService,
-    private toastr: ToastrService,) { }
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.init();

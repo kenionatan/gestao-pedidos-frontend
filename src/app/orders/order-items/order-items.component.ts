@@ -5,6 +5,7 @@ import { ItemService } from 'src/app/shared/item.service';
 import { Item } from 'src/app/shared/item.model';
 import { NgForm } from '@angular/forms';
 import { OrderService } from 'src/app/shared/order.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-items',
@@ -21,7 +22,8 @@ export class OrderItemsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     public dialogRef: MatDialogRef<OrderItemsComponent>,
     private itemService: ItemService,
-    private orderSevice: OrderService) { }
+    private orderSevice: OrderService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     this.itemService.getItemList().then(res => this.itemList = res as Item[]);
@@ -86,21 +88,26 @@ export class OrderItemsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.validateForm(form.value)) {
-      const item = {
-        product: {
-          id: parseInt(form.value.ItemID),
-          product_title: form.value.ItemName,
-          product_price: parseFloat(form.value.Price),
-          quantity: form.value.Quantity,
-          profitability: form.value.Profitability
-        }
-      };
-      if (this.data.orderItemIndex == null)
-        this.orderSevice.orderItems.push(item);
-      else
-        this.orderSevice.orderItems[this.data.orderItemIndex] = item;
-      this.dialogRef.close();
+    if (this.formData.Profitability == "Rentabilidade Ruim"){
+      this.toastr.warning('Rentabilidade Ruim Não Permitida!', 'Aviso');
+      console.log("Não Permitido");
+    }else{
+      if (this.validateForm(form.value)) {
+        const item = {
+          product: {
+            id: parseInt(form.value.ItemID),
+            product_title: form.value.ItemName,
+            product_price: parseFloat(form.value.Price),
+            quantity: form.value.Quantity,
+            profitability: form.value.Profitability
+          }
+        };
+        if (this.data.orderItemIndex == null)
+          this.orderSevice.orderItems.push(item);
+        else
+          this.orderSevice.orderItems[this.data.orderItemIndex] = item;
+        this.dialogRef.close();
+      }
     }
   }
 
