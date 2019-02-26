@@ -88,7 +88,13 @@ export class OrderItemsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.formData.Profitability == "Rentabilidade Ruim"){
+    var iditem = this.formData.ItemID-1;
+    var multipleitem:number = this.itemList[iditem].product_multiple;
+
+    if(this.formData.Quantity % multipleitem != 0 && multipleitem != null){
+      this.toastr.warning('Produto não pode ser comprado nessa quantidade, Multiplo: '+multipleitem, 'Aviso');
+      console.log("Não Permitido");
+    }else if (this.formData.Profitability == "Rentabilidade Ruim"){
       this.toastr.warning('Rentabilidade Ruim Não Permitida!', 'Aviso');
       console.log("Não Permitido");
     }else{
