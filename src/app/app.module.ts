@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,9 @@ import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+registerLocaleData(ptBr)
 
 @NgModule({
   declarations: [
@@ -41,7 +44,12 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     MatListModule
   ],
   entryComponents: [OrderItemsComponent, MatConfirmDialogComponent],
-  providers: [OrderService],
+  providers: [OrderService, 
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt-BR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

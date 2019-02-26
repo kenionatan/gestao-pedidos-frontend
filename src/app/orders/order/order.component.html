@@ -43,9 +43,9 @@
       </tr>
       <tr *ngFor="let item of service.orderItems; let i=index;">
         <td>{{ getItemBy(item.product.id).product_title }}</td>
-        <td>{{ item.product.product_price?.toFixed(2) }}</td>
+        <td>{{ item.product.product_price?.toFixed(2) | currency:'BRL':'symbol-narrow' }}</td>
         <td>{{ item.product.quantity }}</td>
-        <td>{{ (item.product.product_price*item.product.quantity)?.toFixed(2) }}</td>
+        <td>{{ (item.product.product_price*item.product.quantity)?.toFixed(2) | currency:'BRL':'symbol-narrow' }}</td>
         <td>{{ item.product.profitability }}</td>
         <td>
           <a class="btn btn-sm btn-info text-white" (click)="AddOrEditOrderItem(i, service.formData.OrderID)"><i class="fa fa-pencil-alt"></i></a>

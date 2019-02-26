@@ -10,7 +10,7 @@
     <tr *ngFor="let item of orderList">
       <th>{{ item.id }}</th>
       <td>{{ getClientBy(item.client).client_name }}</td>
-      <td>{{ item.grand_total }}</td>
+      <td>{{ item.grand_total | currency:'BRL':'symbol-narrow' }}</td>
       <td>{{ item.create_date | date:"dd/MM/yyyy 'às' HH:mm:ss" }}</td>
       <td>
         <a class="btn btn-sm btn-info text-white" (click)="openForEdit(item.id)"><i class="fa fa-pencil-alt"></i></a>
