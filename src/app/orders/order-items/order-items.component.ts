@@ -81,10 +81,14 @@ export class OrderItemsComponent implements OnInit {
   }
 
   updateTotal() {
-    var iditem = this.formData.ItemID-1;
-    var priceitem:number = this.itemList[iditem].product_price;
-    this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
-    this.calcProfitability(priceitem, this.formData.Price);
+    if(this.formData.ItemID != 0){
+      var iditem = this.formData.ItemID-1;
+      var priceitem:number = this.itemList[iditem].product_price;
+      this.formData.Total = parseFloat((this.formData.Quantity * this.formData.Price).toFixed(2));
+      this.calcProfitability(priceitem, this.formData.Price);
+    }else{
+      this.toastr.warning('Selecione um item pirmeiro', 'Aviso');
+    }
   }
 
   onSubmit(form: NgForm) {
