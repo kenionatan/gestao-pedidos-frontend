@@ -52,15 +52,15 @@ cursor: pointer;
 .confirm-dialog-container #no-button {
     height: 50px;
     width: 50%;
-    background-color: #fc7169;
-    color: #FAFAFA;
+    background-color: #F8F8F8;
+    color: #999;
     border-radius: 0px;
 }
 
 .confirm-dialog-container #yes-button {
     height: 50px;
     width: 50%;
-    background-color: #b6bece;
+    background-color: #fc7169;
     color: #FAFAFA;
     border-radius: 0px;
 }
