@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit {
             product: {
               id: entry.product,
               product_price: parseFloat(entry.price),
-              quantity: entry.quantityProduct,
+              quantity: entry.quantity,
               profitability: entry.profitability
             }
           };
