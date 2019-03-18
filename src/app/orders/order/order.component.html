@@ -15,10 +15,8 @@
       <div class="form-group">
         <label>Total</label>
         <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">R$</div>
-          </div>
-          <input name="grand_total" #grand_total="ngModel" [(ngModel)]="service.formData.grand_total" class="form-control" readonly>
+          <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" 
+          name="grand_total" #grand_total="ngModel" [(ngModel)]="service.formData.grand_total" class="form-control" readonly>
         </div>
       </div>
     </div>

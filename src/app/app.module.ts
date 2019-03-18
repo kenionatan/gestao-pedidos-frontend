@@ -17,6 +17,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 import { registerLocaleData } from '@angular/common';
 import ptBr from '@angular/common/locales/pt';
+import { NgxMaskModule } from 'ngx-mask';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 registerLocaleData(ptBr)
 
 @NgModule({
@@ -41,7 +43,9 @@ registerLocaleData(ptBr)
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    NgxMaskModule.forRoot(),
+    CurrencyMaskModule
   ],
   entryComponents: [OrderItemsComponent, MatConfirmDialogComponent],
   providers: [OrderService, 
